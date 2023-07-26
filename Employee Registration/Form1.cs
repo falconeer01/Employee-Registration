@@ -18,6 +18,8 @@ namespace Employee_Registration
             InitializeComponent();
         }
 
+        SqlConnection conn = new SqlConnection("Data Source=DESKTOP-2AK7Q68\\SQLEXPRESS;Initial Catalog=employees;Integrated Security=True");
+
         public void clear(Control comp) 
         {
             if (comp is RadioButton radioButton)
@@ -34,38 +36,33 @@ namespace Employee_Registration
         {
             int rowIndex = dataGridView.SelectedCells[0].RowIndex;
 
-            if (comp is RadioButton radioButton)
+            if (comp is RadioButton radioButton && radioButton.Name == "radioM")
             {
                 if (dataGridView.Rows[rowIndex].Cells[cellIndex].Value is bool value && value == true)
                 {
                     radioButton.Checked = true;
                 }
-                else 
-                { 
-                    radioButton.Checked = false; 
+                else
+                {
+                    radioButton.Checked = false;
                 }
             }
-            else 
+            else if (comp is RadioButton radioButton2 && radioButton2.Name == "radioS")
+            {
+                if (dataGridView.Rows[rowIndex].Cells[cellIndex].Value is bool value && value == true)
+                {
+                    radioButton2.Checked = false;
+                }
+                else
+                {
+                    radioButton2.Checked = true;
+                }
+            }
+            else
             {
                 comp.Text = dataGridView.Rows[rowIndex].Cells[cellIndex].Value.ToString();
             }
         }
-
-        public void reflectDataForRadioS(RadioButton radioButton, DataGridView dataGridView, int cellIndex)
-        {
-            int rowIndex = dataGridView.SelectedCells[0].RowIndex;
-
-            if (dataGridView.Rows[rowIndex].Cells[cellIndex].Value is bool value && value == true)
-            {
-                radioButton.Checked = false;
-            }
-            else
-            {
-                radioButton.Checked = true;
-            }
-        }
-
-        SqlConnection conn = new SqlConnection("Data Source=DESKTOP-2AK7Q68\\SQLEXPRESS;Initial Catalog=employees;Integrated Security=True");
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -145,7 +142,7 @@ namespace Employee_Registration
             reflectData(cityBox, dataGridView1, 3);
             reflectData(salaryBox, dataGridView1, 4);
             reflectData(radioM, dataGridView1, 5);
-            reflectDataForRadioS(radioS, dataGridView1, 5);
+            reflectData(radioS, dataGridView1, 5);
             reflectData(jobBox, dataGridView1, 6);
         }
 
